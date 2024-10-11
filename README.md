@@ -1,3 +1,5 @@
+🇧🇷
+
 #### DISCLAIMER
 Amateur project, experience purposes. I'm not responsible for any possible shit code (i'm, actually). ☠️
 <br> <br>
