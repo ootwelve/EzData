@@ -1,0 +1,16 @@
+EzData CHANGE LOG
+
+v0.0.1 10/10/24 BR
+Created base program and create database feature.
+
+v0.0.2 11/10/24 BR
+Bug fix:
+    Database creation algorithm not returning to main;
+    Columns number always getting string.
+Created delete database feature.
+Created edit database feature: add table.
+Added exit command.
+
+ANOTAÇOES PRA v0.0.3:
+    ADICIONAR FUNÇAO DE SAIR DO ALGORITMO EM VEZ DE RETORNAR AO MAIN TODA VEZ QUE UMA AÇAO E EXECUTADA;
+    MELHORAR GERENCIAMENTO DE ERROS.
