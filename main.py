@@ -1,17 +1,40 @@
 import sys
 import dbs_manager
+import json
+
+program_info_json = open('program_info.json')
+program_info = json.load(program_info_json)
+
+ezdata_ver = program_info["versions"]["ez_data"]
+dc_alg_ver = program_info["versions"]["dc_alg"]
+dd_alg_ver = program_info["versions"]["dd_alg"]
+de_alg_ver = program_info["versions"]["de_alg"]
+
+program_info_json.close()
+
 
 def database_creation_algorithm():
-    print("\nEzData Database Creation Algorithm v1.0.0")
+    print(f"\nEzData Database Creation Algorithm v{dc_alg_ver} | \"op_return\" at any time to return")
     db_tables_names = []
     db_tables = 0
-    db_name = str(input("Database name: "))
+    db_name = (input("Database name: "))
+    if db_name == "op_return":
+        main()
+
     try:
-        db_tables = int(input("How many tables does it have: "))
+        db_tables = (input("How many tables does it have: "))
+        if db_tables == "op_return":
+            main()
+        else:
+            int(db_tables)
     except:
         while type(db_tables) != int:
             try:
-                db_tables = int(input("ERROR: Type an integer value (1, 2, 3...) \n How many tables does it have: "))
+                db_tables = (input("ERROR: Type an integer value (1, 2, 3...) \n How many tables does it have: "))
+                if db_tables == "op_return":
+                    main()
+                else:
+                    int(db_tables)
                 break
             except:
                 continue
@@ -19,39 +42,50 @@ def database_creation_algorithm():
     cnt = db_tables
     while cnt > 0:
         db_tables_names.append(input(f"Type the tables names ({cnt} remaining): "))
+        if db_tables_names == "op_return":
+            main()
         cnt -= 1
 
     dbs_manager.create_database(db_name, db_tables, db_tables_names)
-    main()
+    database_creation_algorithm()
 
 def database_deleting_algorithm():
-    print("\nEzData Database Deleting Algorithm v1.0.0")
-    db_name = str(input("Name of the database to be deleted: "))
-    confirmation = str(input(f"Are you sure you want to delete {db_name}? (y: yes / n: no) "))
+    print(f"\nEzData Database Deleting Algorithm v{dd_alg_ver} | \"op_return\" at any time to return")
+    db_name = (input("Name of the database to be deleted: "))
+    if db_name == "op_return":
+        main()
+
+    confirmation = (input(f"Are you sure you want to delete {db_name}? (y: yes / n: no) "))
     match confirmation.upper():
         case "Y":
             dbs_manager.delete_database(db_name)
+        case "op_return":
+            main()
         case _:
             print("\nOperation canceled; action not confirmed by user.")
-    main()
+    database_deleting_algorithm()
 
 def database_editing_algorithm():
-    print("\nEzData Database Editing Algorithm v1.0.0")
-    db_name = str(input("Name of the database to be edited: "))
-    confirmation = input(f"Select {db_name}? (y: yes / n: no) ")
+    print(f"\nEzData Database Editing Algorithm v{de_alg_ver} | \"op_return\" at any time to return")
+    db_name = (input("Name of the database to be edited: "))
+    if db_name == "op_return":
+        main()
 
+    confirmation = input(f"Select {db_name}? (y: yes / n: no) ")
     match confirmation.upper():
         case "Y":
             dbs_manager.edit_database(db_name)
+        case "op_return":
+            main()
         case _:
             print("\nOperation canceled; action not confirmed by user.")
-    main()
+    database_editing_algorithm()
 
 def main():
-    print("\n EzData v0.0.2\n")
+    print(f"\n EzData v{ezdata_ver}\n")
 
     def get_command():
-        cmd = str(input("Command (ez_help for help): "))
+        cmd = (input("Command (ez_help for help): "))
         match cmd:
             case "ez_help":
                 print("ez_exit: Exit the program.")
