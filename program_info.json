@@ -1,5 +1,13 @@
-{"versions":{
-    "ez_data":"0.0.3",
+{
+
+"versions":
+    {
+    "ez_data":"0.0.4",
     "dc_alg":"1.0.1",
     "dd_alg":"1.0.1",
-    "de_alg":"1.0.1"}}
+    "de_alg":"1.0.1"
+    },
+
+"dbs_path":""
+
+}

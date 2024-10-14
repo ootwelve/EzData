@@ -1,4 +1,5 @@
 import sys
+import os
 import dbs_manager
 import json
 
@@ -16,37 +17,28 @@ program_info_json.close()
 def database_creation_algorithm():
     print(f"\nEzData Database Creation Algorithm v{dc_alg_ver} | \"op_return\" at any time to return")
     db_tables_names = []
-    db_tables = 0
-    db_name = (input("Database name: "))
+    db_tables_cnt = 0
+
+    db_name = input("Database name: ")
     if db_name == "op_return":
         main()
 
-    try:
-        db_tables = (input("How many tables does it have: "))
-        if db_tables == "op_return":
-            main()
-        else:
-            int(db_tables)
-    except:
-        while type(db_tables) != int:
+    db_tables_cnt = input("How many tables does it have to have: ")
+    if db_tables_cnt == "op_return":
+        main()
+    else:
+        while type(db_tables_cnt) != int:
             try:
-                db_tables = (input("ERROR: Type an integer value (1, 2, 3...) \n How many tables does it have: "))
-                if db_tables == "op_return":
-                    main()
-                else:
-                    int(db_tables)
-                break
+                db_tables_cnt = int(input("ERROR: Type an integer value (1, 2, 3...) | How many tables does it have to have: "))
             except:
-                continue
+                pass
 
-    cnt = db_tables
-    while cnt > 0:
-        db_tables_names.append(input(f"Type the tables names ({cnt} remaining): "))
-        if db_tables_names == "op_return":
-            main()
-        cnt -= 1
+    cnt = 0
+    while db_tables_cnt > cnt:
+        db_tables_names.append(input(f"Name of the table number {cnt+1}: "))
+        cnt += 1
 
-    dbs_manager.create_database(db_name, db_tables, db_tables_names)
+    dbs_manager.create_database(db_name, db_tables_cnt, db_tables_names)
     database_creation_algorithm()
 
 def database_deleting_algorithm():
@@ -81,17 +73,21 @@ def database_editing_algorithm():
             print("\nOperation canceled; action not confirmed by user.")
     database_editing_algorithm()
 
+def ez_config():
+    print("Avaible operations: \ncfg_set_path: Set the default path to manage the databases.")
+
 def main():
     print(f"\n EzData v{ezdata_ver}\n")
 
     def get_command():
-        cmd = (input("Command (ez_help for help): "))
+        cmd = input("Command (ez_help for help): ")
         match cmd:
             case "ez_help":
                 print("ez_exit: Exit the program.")
                 print("ez_create_db: Starts an setup for creating an local database.")
                 print("ez_delete_db: Deletes an existing local database.")
-                print("ez_edit_db: Edits an existing local database.\n")
+                print("ez_edit_db: Edits an existing local database.")
+                print("ez_config: Enters the EzData's configuration algorithm.\n")
                 get_command()
             case "ez_exit":
                 print("Thank you for using EzData! Exiting...\n")
@@ -102,6 +98,8 @@ def main():
                 database_deleting_algorithm()
             case "ez_edit_db":
                 database_editing_algorithm()
+            case "ez_config":
+                ez_config()
             case _:
                 print("Invalid command.\n")
                 get_command()
