@@ -1,13 +1,1 @@
-{
-
-"versions":
-    {
-    "ez_data":"0.0.4",
-    "dc_alg":"1.0.1",
-    "dd_alg":"1.0.1",
-    "de_alg":"1.0.1"
-    },
-
-"dbs_path":""
-
-}
+{"versions": {"ez_data": "0.0.4", "dc_alg": "1.0.1", "dd_alg": "1.0.1", "de_alg": "1.0.1"}, "dbs_path": "/home/twelve2/Downloads/"}

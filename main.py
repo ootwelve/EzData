@@ -3,16 +3,21 @@ import os
 import dbs_manager
 import json
 
-program_info_json = open('program_info.json')
-program_info = json.load(program_info_json)
+try:
+    with open('program_info.json') as file:
+        program_info = json.load(file)
 
-ezdata_ver = program_info["versions"]["ez_data"]
-dc_alg_ver = program_info["versions"]["dc_alg"]
-dd_alg_ver = program_info["versions"]["dd_alg"]
-de_alg_ver = program_info["versions"]["de_alg"]
+        try:
+            ezdata_ver = program_info["versions"]["ez_data"]
+            dc_alg_ver = program_info["versions"]["dc_alg"]
+            dd_alg_ver = program_info["versions"]["dd_alg"]
+            de_alg_ver = program_info["versions"]["de_alg"]
+        except Exception as e:
+            print(f"ERROR LOADING BASIC INFO: {e}")
+except Exception as e:
+    print(f"ERROR LOADING BASIC INFO: {e}")
 
-program_info_json.close()
-
+file.close()
 
 def database_creation_algorithm():
     print(f"\nEzData Database Creation Algorithm v{dc_alg_ver} | \"op_return\" at any time to return")
@@ -27,11 +32,13 @@ def database_creation_algorithm():
     if db_tables_cnt == "op_return":
         main()
     else:
-        while type(db_tables_cnt) != int:
+        while True:
             try:
-                db_tables_cnt = int(input("ERROR: Type an integer value (1, 2, 3...) | How many tables does it have to have: "))
+                db_tables_cnt = int(db_tables_cnt)
+                break
             except:
-                pass
+                if type(db_tables_cnt) != int:
+                    db_tables_cnt = input("ERROR: Type an integer value (1, 2, 3...) | How many tables does it have to have: ")
 
     cnt = 0
     while db_tables_cnt > cnt:
@@ -74,7 +81,29 @@ def database_editing_algorithm():
     database_editing_algorithm()
 
 def ez_config():
-    print("Avaible operations: \ncfg_set_path: Set the default path to manage the databases.")
+    print("Avaible operations: \ncfg_set_path: Set the default path to manage the databases.\n")
+
+    operation = input("Operation: ")
+    match operation:
+        case "cfg_set_path":
+            path = input("Enter the new default path for managing the databases, from root: ")
+            try:
+                with open("program_info.json", "r") as file:
+                    program_info = json.load(file)
+
+                with open("program_info.json", "w+") as file:
+                    program_info["dbs_path"] = path
+                    json.dump(program_info, file)
+
+                    print("Path succesfully saved.\n")
+
+                file.close()
+            except Exception as e:
+                print(f"ERROR: {e}")
+        case _:
+            "Invalid operation."
+
+    main()
 
 def main():
     print(f"\n EzData v{ezdata_ver}\n")

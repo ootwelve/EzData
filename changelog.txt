@@ -20,7 +20,4 @@ v0.0.4 13/10/24 BR dd/mm/yy
 Bug fix:
     Database creation algorithm critical failures.
 Added custom path option for operating the databases.
-
-ANOTACOES PARA 0.0.4:
-    ADICIONAR CAMINHOS PERSONALIZADOS PARA AS OPERACOES;
-    REVISAR GERENCIAMENTO DE ERROS.
+Minimal optimization improvements.
